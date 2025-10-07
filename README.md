@@ -5,7 +5,15 @@
 
 - **Herramientas usadas y comandos ejecutados**:
 
-Para la creación automática de documentación he utilizado GitHub Actions como herramienta de integración continua. El proyecto está desarrollado con Java 21 y la documentación se genera utilizando JavaDoc, siguiendo el estilo Javadoc en la documentación del código. La generación de la documentación se realiza mediante el comando `javadoc -d docs src/main/java/*.java` usado en el workflow, que crea la documentación en formato HTML.
+Para la creación automática de documentación he utilizado GitHub Actions como herramienta de integración continua. El proyecto está desarrollado con Java 21 y la documentación se genera utilizando JavaDoc, siguiendo el estilo Javadoc en la documentación del código. La generación de la documentación se realiza mediante el comando `javadoc -d docs src/main/java/*.java` usado en el workflow, que crea la documentación en formato HTML en la carpeta docs.   
+Y para convertir la documentación generada por JavaDoc a PDF utilizo el paquete wkhtmltopdf, utilizando estos comandos las creo en la carpeta docs/pdf:
+```
+mkdir -p docs/pdf
+wkhtmltopdf --enable-local-file-access docs/package-summary.html docs/pdf/documentacion-package.pdf
+wkhtmltopdf --enable-local-file-access docs/index-all.html docs/pdf/documentacion-index-all.pdf
+wkhtmltopdf --enable-local-file-access docs/allclasses-index.html docs/pdf/allclasses-index.pdf
+wkhtmltopdf --enable-local-file-access docs/Main.html docs/pdf/documentacion-Main.pdf
+```
 
 - **Ejemplo de como se ha documentado el código aplicando Javadoc**:
 https://github.com/danielmi5/2526_DAW_u1_action_Practica1.1/blob/633c41bb62c170fbff0a9dca890dd6c99719481c/src/main/java/Main.java#L78-L95
@@ -16,6 +24,7 @@ Al principio del comentario utilizo la descripción de lo que hace el método (e
  
 - **Formatos generados de la documentación**:
   - HTML: Genero la documentación en formato HTML mediante JavaDoc, esta se genera el la carpeta docs/ ([enlace a la carpeta](https://github.com/danielmi5/2526_DAW_u1_action_Practica1.1/tree/main/docs))
+  - PDF: Convierto la documentación en formato HTML generada por JavaDoc a PDF. Los archivos convertidos se crean en la carpeta docs/pdf ([enlace a la carpeta](https://github.com/danielmi5/2526_DAW_u1_action_Practica1.1/tree/main/docs/pdf))
 
 - **Explicación del [workflow](https://github.com/danielmi5/2526_DAW_u1_action_Practica1.1/blob/main/.github/workflows/ci.yaml)**:
 Los eventos que disparan el workflow son:
@@ -39,7 +48,27 @@ Pasos del job **auto-doc**:
 4. **Commit automático**
 
    * Acción: `stefanzweifel/git-auto-commit-action@v4`
-   * Hace commit de los cambios en la carpeta docs/ con el mensaje "Documentación JavaDoc actualizada".
+   * Hace commit de los cambios en la carpeta docs/ con el mensaje "Documentación JavaDoc en formato HTML actualizada".
+
+5. **Instalación de wkhtmltopdf**  
+   - Comando: `sudo apt install wkhtmltopdf`
+   - Instala el paquete wkhtmltopdf
+     
+
+6. **Conversión de HTML a PDF**  
+   - Comando: 
+     ```
+     mkdir -p docs/pdf
+     wkhtmltopdf --enable-local-file-access docs/package-summary.html docs/pdf/documentacion-package.pdf
+     wkhtmltopdf --enable-local-file-access docs/index-all.html docs/pdf/documentacion-index-all.pdf
+     wkhtmltopdf --enable-local-file-access docs/allclasses-index.html docs/pdf/allclasses-index.pdf
+     wkhtmltopdf --enable-local-file-access docs/Main.html docs/pdf/documentacion-Main.pdf
+     ```
+    - Convierte varios archivos html generados en la documentación de JavaDoc a pdf.
+
+7. **Commit automático de la documentación PDF**  
+   - Acción: `stefanzweifel/git-auto-commit-action@v4`  
+   - Hace commit de los cambios en la carpeta docs/pdf/ con el mensaje "Documentación en formato PDF actualizada"
 
 - **Evidencia de la conexión a github mediante SSH**:
 ![Prueba de conexión SSH](imagenes/pruebaSSH.png)
