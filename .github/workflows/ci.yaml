@@ -27,6 +27,10 @@ jobs:
             distribution: 'temurin'
             java-version: '21'
       - run: javadoc -d docs src/main/java/*.java
+      - name: Commit automático de la documentación
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: "Documentación JavaDoc actualizada."
 
 
         
