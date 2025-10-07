@@ -1,5 +1,11 @@
 # Práctica 1.1 documentación con github actions
 
+
+## Documentación
+
+- Evidencia de la conexión a github mediante SSH:
+![Prueba de conexión SSH](imagenes/pruebaSSH.png)
+
 ## Preguntas
 
 ### a. Identificación de herramientas de generación de documentación
