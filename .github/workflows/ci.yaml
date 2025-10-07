@@ -27,10 +27,27 @@ jobs:
             distribution: 'temurin'
             java-version: '21'
       - run: javadoc -d docs src/main/java/*.java
-      - name: Commit automático de la documentación
+      - name: Commit automático de la documentación en formato HTML
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
-          commit_message: "Documentación JavaDoc actualizada."
+          commit_message: "Documentación JavaDoc en formato HTML actualizada."
+      - name: Instalar el paquete wkhtmltopdf
+        run: sudo apt install wkhtmltopdf
+
+      - name: Convertir HTML a PDF
+        run: |
+          mkdir -p docs/pdf
+          wkhtmltopdf --enable-local-file-access docs/package-summary.html docs/pdf/documentacion-package.pdf
+          wkhtmltopdf --enable-local-file-access docs/index-all.html docs/pdf/documentacion-index-all.pdf
+          wkhtmltopdf --enable-local-file-access docs/allclasses-index.html docs/pdf/allclasses-index.pdf
+          wkhtmltopdf --enable-local-file-access docs/Main.html docs/pdf/documentacion-Main.pdf
+
+
+
+      - name: Commit automático de la documentación en formato PDF
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: "Documentación en formato PDF actualizada."
 
 
         
