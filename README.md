@@ -187,7 +187,7 @@ La gestión de estas autorizaciones se realiza mediante equipos y roles, lo que 
 
 ### g. Instalación/uso documentados
 Indica dónde en el README.md explicas el funcionamiento del workflow y dónde detallas las herramientas y comandos de documentación.    
-El funcionamiento de los dos workflow se explicane [aquí](#funcionamiento-de-los-dos-workflows) (línea 22).  
+El funcionamiento de los dos workflow se explicane [aquí](#funcionamiento-de-los-dos-workflows) (línea 38).  
 Las herramientas y comandos se detallan [aquí](#documentación-de-las-herramientas-y-comandos-utilizados) (línea 6).  
 
 ### h. Integración continua
@@ -206,7 +206,7 @@ Herramientas utilizadas
 - [MkDocs](https://www.mkdocs.org/user-guide/) 
 - [GitHub Pages](https://docs.github.com/es/pages)   
 
-Actions utilizadas
+Actions utilizados
 - [actions/checkout@v3](https://github.com/actions/checkout)  
 - [actions/setup-java@v5](https://github.com/actions/setup-java)  
 - [actions/setup-python@v4](https://docs.github.com/es/actions/tutorials/build-and-test-code/python)  
