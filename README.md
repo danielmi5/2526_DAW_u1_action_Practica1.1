@@ -14,19 +14,12 @@ wkhtmltopdf --enable-local-file-access docs/index-all.html docs/pdf/documentacio
 wkhtmltopdf --enable-local-file-access docs/allclasses-index.html docs/pdf/allclasses-index.pdf
 wkhtmltopdf --enable-local-file-access docs/Main.html docs/pdf/documentacion-Main.pdf
 ```
-
-- **Ejemplo de como se ha documentado el código aplicando Javadoc**:
-https://github.com/danielmi5/2526_DAW_u1_action_Practica1.1/blob/633c41bb62c170fbff0a9dca890dd6c99719481c/src/main/java/Main.java#L78-L95
-Al principio del comentario utilizo la descripción de lo que hace el método (en este caso: factorial) y utilizo etiquetas de Javadoc como:
-  - `@param` para describir el parámetro que recibe el método.
-  - `@return` para describir el valor que se devuelve.
-  - `@throw` para indicar la excepción que se lanza y el por qué.
  
 - **Formatos generados de la documentación**:
   - HTML: Genero la documentación en formato HTML mediante JavaDoc, esta se genera el la carpeta docs/ ([enlace a la carpeta](https://github.com/danielmi5/2526_DAW_u1_action_Practica1.1/tree/main/docs))
   - PDF: Convierto la documentación en formato HTML generada por JavaDoc a PDF. Los archivos convertidos se crean en la carpeta docs/pdf ([enlace a la carpeta](https://github.com/danielmi5/2526_DAW_u1_action_Practica1.1/tree/main/docs/pdf))
 
-- **Explicación del [workflow](https://github.com/danielmi5/2526_DAW_u1_action_Practica1.1/blob/main/.github/workflows/ci.yaml)**:
+- **Explicación del [workflow](https://github.com/danielmi5/2526_DAW_u1_action_Practica1.1/blob/main/.github/workflows/ci.yaml)**:  
 Los eventos que disparan el workflow son:
     - Hacer push a la rama main.
     - workflow_dispatch: permite ejecutar manualmente desde GitHub en [Actions](https://github.com/danielmi5/2526_DAW_u1_action_Practica1.1/actions/workflows/ci.yaml).
@@ -77,11 +70,17 @@ Pasos del job **auto-doc**:
 
 ### a. Identificación de herramientas de generación de documentación
 ¿Qué herramienta o generador (p. ej., Sphinx, pdoc, Javadoc, Doxygen, Dokka) utilizaste en el workflow para crear la documentación en /docs?
+Para generar la documentación en la carpeta docs, utilicé JavaDoc para extraer los comentarios (con el estilo Javadoc) del código y generar la documentación en formato HTML. Después, utilicé la herramienta wkhtmltopdf para convertir esos archivos HTML en documentos PDF, guardándose en la carpeta docs/pdf.
 
 ### b. Documentación de componentes
 Muestra un fragmento del código con comentarios/docstrings estructurados (p. ej., :param, :return: o etiquetas equivalentes) que haya sido procesado por la herramienta.  
-Comenta qué estilo de documentación has utilizado (p. ej., reStructuredText, Google Style, KDoc).
-
+Comenta qué estilo de documentación has utilizado (p. ej., reStructuredText, Google Style, KDoc).  
+Ejemplo:   
+https://github.com/danielmi5/2526_DAW_u1_action_Practica1.1/blob/633c41bb62c170fbff0a9dca890dd6c99719481c/src/main/java/Main.java#L78-L95
+He utilizado Javadoc como estilo de documentación para el código. Al principio del comentario utilizo la descripción de lo que hace el método (en este caso: factorial) y utilizo etiquetas de Javadoc como:
+  - `@param` para describir el parámetro que recibe el método.
+  - `@return` para describir el valor que se devuelve.
+  - `@throw` para indicar la excepción que se lanza y el por qué.
 
 ### c. Multiformato
 ¿Qué segundo formato (además de HTML) generaste?  
