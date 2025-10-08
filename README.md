@@ -199,7 +199,7 @@ Es de integración continua porque se encarga de generar la documentación autom
 ## Evidencia de la conexión a github mediante SSH  
 ![Prueba de conexión SSH](imagenes/pruebaSSH.png)
 
-## Documentación de las herramientas y actions utilizados.
+## Enlaces a la documentación de las herramientas y actions utilizados.
 Herramientas utilizadas
 - [Javadoc](https://docs.oracle.com/javase/8/docs/technotes/tools/windows/javadoc.html) 
 - [wkhtmltopdf](https://wkhtmltopdf.org/)  
