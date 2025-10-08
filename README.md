@@ -171,4 +171,7 @@ Es de integración continua porque se encarga de generar la documentación autom
 ## Evidencia de la conexión a github mediante SSH  
 ![Prueba de conexión SSH](imagenes/pruebaSSH.png)
 
-## Conclusiones
+## Como usar el repositorio para reproducir la generación de documentación
+Primero hay que hacer fork del repositorio [aquí](https://github.com/danielmi5/2526_DAW_u1_action_Practica1.1/fork).
+Para generar la documentación del repositorio no hace falta clonarlo, se puede hacer manualmente. Para generar la documentación manualmente, en el repo en la pestaña Actions se puede acceder a los workflows utilizados. Debes elegir el workflow llamado "CI con documentación automática mediante JavaDoc" y dentro, aparece una opción para poder ejecutarlo y generar la documentación.
+En caso de querer ejecutar el segundo workflow y generar la página con github pages, tendrías que modificar la variable estática "usuario" en el archivo CreadorMkDocs.java y poner tu usuario.
