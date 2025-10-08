@@ -15,20 +15,10 @@ wkhtmltopdf --enable-local-file-access docs/allclasses-index.html docs/pdf/allcl
 wkhtmltopdf --enable-local-file-access docs/Main.html docs/pdf/documentacion-Main.pdf
 ```
 
-También he utilizado MkDocs para generar el sitio web de la documentación y publicarlo en GitHub Pages mediante la acción.
-Añadir que he creado un programa en Java encargado de crear automáticamente el archivo de configuración de MkDocs. 
-
-Comandos utilizados: 
-- `pip install mkdocs`: Instala MkDocs
-- `javac CreadorMkDocs.java` y `java CreadorMkDocs`: Compilan y ejecutan CreadorMkDocs que genera el archivo de configuración `mkdocs.yml` de MkDocs.
-- `mkdocs build`: Construye la página estática con la documentación dentro de la carpeta `site`.
-
 Actions utilizados:
 - **actions/checkout@v3**: Clona el repositorio en el entorno del runner.
 - **actions/setup-java@v5**: Instala y configura Java 21 (con distribución Temurin).  
 - **stefanzweifel/git-auto-commit-action@v4**: Realiza commits automáticos.
-- **actions/setup-python@v4**: Instala y configura Python 3.10, necesario para MkDocs.  
-- **peaceiris/actions-gh-pages@v3**: Publica el sitio generado por MkDocs en GitHub Pages en la rama gh-pages.  
 
 
  ### Formatos generados de la documentación
@@ -36,7 +26,7 @@ Actions utilizados:
   - PDF: Convierto la documentación en formato HTML generada por JavaDoc a PDF. Los archivos convertidos se crean en la carpeta docs/pdf ([enlace a la carpeta](https://github.com/danielmi5/2526_DAW_u1_action_Practica1.1/tree/main/docs/pdf))
 
 ### Funcionamiento de los dos workflows  
-Ambos workflows tienen permisos de escritura para que puedan modificar el contenido del repositorio.
+El workflow tienen permisos de escritura para que puedan modificar el contenido del repositorio.
 
 - **Explicación del [workflow 1](https://github.com/danielmi5/2526_DAW_u1_action_Practica1.1/blob/main/.github/workflows/ci.yaml) (ci.yaml)**:  
 Se encarga de crear la documentación en formato HTML y PDF.
@@ -83,46 +73,6 @@ Pasos del job **auto-doc**:
    - Acción: `stefanzweifel/git-auto-commit-action@v4`
    - Asigna `github_token: ${{ secrets.GITHUB_TOKEN }}` que es un token automático que GitHub crea para cada workflow y se usa      para que las acciones puedan autenticarse y realizar sus procesos en el repositorio.
    - Hace commit de los cambios en la carpeta docs/pdf/ con el mensaje "Documentación en formato PDF actualizada"
-  
-- **Explicación del [workflow 2](https://github.com/danielmi5/2526_DAW_u1_action_Practica1.1/blob/main/.github/workflows/mkdocs.yaml) (mkdocs.yaml)**:  
-Se encarga de publicar la documentación en GitHub Pages usando MkDocs después de completarse el workflow 1.  
-Los eventos que disparan el workflow son:
-  - `workflow_run`: Cuando se complete el workflow 1 (ci.yaml).
-
-Pasos del job **mkdocs-deploy**:
-
-1. **Checkout del repositorio**  
-   - Acción: `actions/checkout@v3`  
-   - Clona el repositorio.
-
-2. **Configuración de Java**  
-   - Acción: `actions/setup-java@v5`  
-   - Configura Java 21 (Temurin).
-
-3. **Configuración de Python**  
-   - Acción: `actions/setup-python@v4`  
-   - Configura Python 3.10, necesario para instalar y ejecutar MkDocs.
-
-4. **Instalación de MkDocs**  
-   - Comando: `pip install mkdocs`  
-   - Instala MkDocs.
-
-5. **Generación del archivo mkdocs.yml mediante script Java**  
-   - Comandos:
-     ```
-     javac CreadorMkDocs.java
-     java CreadorMkDocs
-     ```  
-   - Compila y ejecuta un programa Java que crea el archivo `mkdocs.yml` para la configuración.
-
-6. **Construcción del sitio MkDocs**  
-   - Comando: `mkdocs build`  
-   - Crea los archivos del sitio en una carpeta site.
-
-7. **Publicación en GitHub Pages**  
-   - Acción: `peaceiris/actions-gh-pages@v3`
-   -  
-   - Publica los contenidos de la carpeta site generada en el anterior paso y lo hace en una rama llamada "gh-pages".
 
 
 ## Preguntas
@@ -169,14 +119,12 @@ Muestra mensajes de commit que evidencien el nuevo workflow.
 ¿Son claros y descriptivos? Justifícalo. Además, incluye un conjunto de mensajes de tus commits.
 
 Lista de los commits:
-- **ae7ee06** "Evento cambiado para que se ejecute el workflow cuando se completa el anterior."
-- **2982151** "Workflow creaado (mkdocs.yaml) para crear la página de la documentación con MkDocs en github pages automáticamente. Añadido cuatro pasos: configurar python (necesario para MkDocs),  instalar MkDocs, generar su archivo de configuración con el script CreadorMkDocs.java, construir el sitio con MkDocs y publicar en github pages."
 - **220c744** "Workflow actualizado para generar documentación con wkhtmltopdf en formato pdf automáticamente. Añadido tres pasos: instalar el paquete  wkhtmltopdf,  convertir algunos archivos html de la documentación de JavaDoc a pdf y hace commit de los cambios."
 - **e7b805b** "Añadido al workflow el paso para hacer commit  automáticamente de la actualización de JavaDoc."
 - **56162b7** "Workflow actualizado para generar documentación con Javadoc automáticamente, configurando también java. He añadido dos pasos, configurar java y un run que ejecuta un comando para crear la documentación."
 
 Los mensajes son claros y descriptivos, ya que siguen una estructura coherente y expresan las acciones realizadas en cada commit. Cada mensaje indica qué se modificó o añadió en el workflow, especificando los pasos añadidos.   
-Aunque, se podría haber detallado más. con qué exactamente se añadió o se modificó en algunos commits y dividir ciertos cambios en varios commits más pequeños, haciendo que el historial de commits sea más ordenado y sencillo de revisar.
+Aunque, se podría haber detallado más. con qué exactamente se añadió o se modificó en algunos commits y dividir los cambios en varios commits más pequeños, haciendo que el historial de commits sea más ordenado y sencillo de revisar.
 
 
 ### f. Accesibilidad y seguridad
@@ -218,4 +166,3 @@ Actions utilizados
 ## Como usar el repositorio para reproducir la generación de documentación
 Primero hay que hacer fork del repositorio [aquí](https://github.com/danielmi5/2526_DAW_u1_action_Practica1.1/fork).  
 Para generar la documentación del repositorio no hace falta clonarlo, se puede hacer manualmente. Para generar la documentación manualmente, en el repo en la pestaña Actions se puede acceder a los workflows utilizados. Debes elegir el workflow llamado "CI con documentación automática mediante JavaDoc" y dentro, aparece una opción para poder ejecutarlo y generar la documentación.  
-En caso de querer ejecutar el segundo workflow y generar la página con github pages, tendrías que modificar la variable estática "usuario" en el archivo CreadorMkDocs.java y poner tu usuario. Y tras ejecutarlo, debes elegir en settings>pages como fuente "desplegar desde una rama" y, la rama "gh-pages" y la carpeta raíz.
