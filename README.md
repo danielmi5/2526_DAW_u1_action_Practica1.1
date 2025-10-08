@@ -149,6 +149,16 @@ Cuando hay varios colaborando en un mismo repositorio se usa principalmente pull
 Muestra mensajes de commit que evidencien el nuevo workflow.  
 ¿Son claros y descriptivos? Justifícalo. Además, incluye un conjunto de mensajes de tus commits.
 
+Lista de los commits:
+- **ae7ee06** "Evento cambiado para que se ejecute el workflow cuando se completa el anterior."
+- **2982151** "Workflow creaado (mkdocs.yaml) para crear la página de la documentación con MkDocs en github pages automáticamente. Añadido cuatro pasos: configurar python (necesario para MkDocs),  instalar MkDocs, generar su archivo de configuración con el script CreadorMkDocs.java, construir el sitio con MkDocs y publicar en github pages."
+- **220c744** "Workflow actualizado para generar documentación con wkhtmltopdf en formato pdf automáticamente. Añadido tres pasos: instalar el paquete  wkhtmltopdf,  convertir algunos archivos html de la documentación de JavaDoc a pdf y hace commit de los cambios."
+- **e7b805b** "Añadido al workflow el paso para hacer commit  automáticamente de la actualización de JavaDoc."
+- **56162b7** "Workflow actualizado para generar documentación con Javadoc automáticamente, configurando también java. He añadido dos pasos, configurar java y un run que ejecuta un comando para crear la documentación."
+
+Los mensajes son claros y descriptivos, ya que siguen una estructura coherente y expresan las acciones realizadas en cada commit. Cada mensaje indica qué se modificó o añadió en el workflow, especificando los pasos añadidos.   
+Aunque, se podría haber detallado un poco más qué exactamente se añadió o se modificó en algunos commits y dividir ciertos cambios en varios commits más pequeños, haciendo que el historial de commits sea más ordenado y sencillo de revisar.
+
 
 ### f. Accesibilidad y seguridad
 ¿Qué medidas/configuración del repositorio garantizan que solo personal autorizado accede al código y la documentación?  
@@ -172,6 +182,6 @@ Es de integración continua porque se encarga de generar la documentación autom
 ![Prueba de conexión SSH](imagenes/pruebaSSH.png)
 
 ## Como usar el repositorio para reproducir la generación de documentación
-Primero hay que hacer fork del repositorio [aquí](https://github.com/danielmi5/2526_DAW_u1_action_Practica1.1/fork).
+Primero hay que hacer fork del repositorio [aquí](https://github.com/danielmi5/2526_DAW_u1_action_Practica1.1/fork).  
 Para generar la documentación del repositorio no hace falta clonarlo, se puede hacer manualmente. Para generar la documentación manualmente, en el repo en la pestaña Actions se puede acceder a los workflows utilizados. Debes elegir el workflow llamado "CI con documentación automática mediante JavaDoc" y dentro, aparece una opción para poder ejecutarlo y generar la documentación.
 En caso de querer ejecutar el segundo workflow y generar la página con github pages, tendrías que modificar la variable estática "usuario" en el archivo CreadorMkDocs.java y poner tu usuario.
