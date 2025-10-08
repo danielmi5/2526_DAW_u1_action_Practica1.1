@@ -1,0 +1,42 @@
+name: CI con documentación con MkDocs en Github Pages automáticamente
+
+on:
+  push:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  mkdocs-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+      - name: Configurar Java
+        uses: actions/setup-java@v5
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+
+      - name: Configurar Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+      - name: Instalar MkDocs
+        run: pip install mkdocs
+      - name: Generar mkdocs.yml con un script
+        run: |
+          javac CreadorMkDocs.java
+          java CreadorMkDocs
+      - name: Construir sitio MkDocs
+        run: mkdocs build
+
+
+      - name: Publicar en GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./site
