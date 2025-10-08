@@ -6,7 +6,7 @@
 ### Documentación de las herramientas y comandos utilizados
 
 Para la creación automática de documentación he utilizado GitHub Actions como herramienta de integración continua. El proyecto está desarrollado con Java 21 y la documentación se genera utilizando JavaDoc, siguiendo el estilo Javadoc en la documentación del código. La generación de la documentación se realiza mediante el comando `javadoc -d docs src/main/java/*.java` usado en el workflow, que crea la documentación en formato HTML en la carpeta docs.   
-Y para convertir la documentación generada por JavaDoc a PDF utilizo el paquete wkhtmltopdf, utilizando estos comandos las creo en la carpeta docs/pdf:
+Y para convertir la documentación generada por JavaDoc a PDF utilizo el paquete wkhtmltopdf, instalado con `sudo apt install wkhtmltopdf`, utilizando estos comandos las creo en la carpeta docs/pdf:
 ```
 mkdir -p docs/pdf
 wkhtmltopdf --enable-local-file-access docs/package-summary.html docs/pdf/documentacion-package.pdf
@@ -14,8 +14,24 @@ wkhtmltopdf --enable-local-file-access docs/index-all.html docs/pdf/documentacio
 wkhtmltopdf --enable-local-file-access docs/allclasses-index.html docs/pdf/allclasses-index.pdf
 wkhtmltopdf --enable-local-file-access docs/Main.html docs/pdf/documentacion-Main.pdf
 ```
- 
-- **Formatos generados de la documentación**:
+
+También he utilizado MkDocs para generar el sitio web de la documentación y publicarlo en GitHub Pages mediante la acción.
+Añadir que he creado un programa en Java encargado de crear automáticamente el archivo de configuración de MkDocs. 
+
+Comandos utilizados: 
+- `pip install mkdocs`: Instala MkDocs
+- `javac CreadorMkDocs.java` y `java CreadorMkDocs`: Compilan y ejecutan CreadorMkDocs que genera el archivo de configuración `mkdocs.yml` de MkDocs.
+- `mkdocs build`: Construye la página estática con la documentación dentro de la carpeta `site`.
+
+Actions utilizados:
+- **actions/checkout@v3**: Clona el repositorio en el entorno del runner.
+- **actions/setup-java@v5**: Instala y configura Java 21 (con distribución Temurin).  
+- **stefanzweifel/git-auto-commit-action@v4**: Realiza commits automáticos.
+- **actions/setup-python@v4**: Instala y configura Python 3.10, necesario para MkDocs.  
+- **peaceiris/actions-gh-pages@v3**: Publica el sitio generado por MkDocs en GitHub Pages en la rama gh-pages.  
+
+
+ ### Formatos generados de la documentación
   - HTML: Genero la documentación en formato HTML mediante JavaDoc, esta se genera el la carpeta docs/ ([enlace a la carpeta](https://github.com/danielmi5/2526_DAW_u1_action_Practica1.1/tree/main/docs))
   - PDF: Convierto la documentación en formato HTML generada por JavaDoc a PDF. Los archivos convertidos se crean en la carpeta docs/pdf ([enlace a la carpeta](https://github.com/danielmi5/2526_DAW_u1_action_Practica1.1/tree/main/docs/pdf))
 
@@ -63,7 +79,8 @@ Pasos del job **auto-doc**:
     - Convierte varios archivos html generados en la documentación de JavaDoc a pdf.
 
 7. **Commit automático de la documentación PDF**  
-   - Acción: `stefanzweifel/git-auto-commit-action@v4`  
+   - Acción: `stefanzweifel/git-auto-commit-action@v4`
+   - Asigna `github_token: ${{ secrets.GITHUB_TOKEN }}` que es un token automático que GitHub crea para cada workflow y se usa      para que las acciones puedan autenticarse y realizar sus procesos en el repositorio.
    - Hace commit de los cambios en la carpeta docs/pdf/ con el mensaje "Documentación en formato PDF actualizada"
   
 - **Explicación del [workflow 2](https://github.com/danielmi5/2526_DAW_u1_action_Practica1.1/blob/main/.github/workflows/mkdocs.yaml) (mkdocs.yaml)**:  
@@ -102,8 +119,9 @@ Pasos del job **mkdocs-deploy**:
    - Crea los archivos del sitio en una carpeta site.
 
 7. **Publicación en GitHub Pages**  
-   - Acción: `peaceiris/actions-gh-pages@v3`  
-   - Publica los contenidos de la carpeta site.
+   - Acción: `peaceiris/actions-gh-pages@v3`
+   -  
+   - Publica los contenidos de la carpeta site generada en el anterior paso y lo hace en una rama llamada "gh-pages".
 
 
 ## Preguntas
