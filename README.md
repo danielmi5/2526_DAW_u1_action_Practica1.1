@@ -3,6 +3,9 @@
 
 ## Documentación
 
+- **Enlace página de Github Pages**:
+[Página con la documentación](https://danielmi5.github.io/2526_DAW_u1_action_Practica1.1/)
+
 - **Herramientas usadas y comandos ejecutados**:
 
 Para la creación automática de documentación he utilizado GitHub Actions como herramienta de integración continua. El proyecto está desarrollado con Java 21 y la documentación se genera utilizando JavaDoc, siguiendo el estilo Javadoc en la documentación del código. La generación de la documentación se realiza mediante el comando `javadoc -d docs src/main/java/*.java` usado en el workflow, que crea la documentación en formato HTML en la carpeta docs.   
