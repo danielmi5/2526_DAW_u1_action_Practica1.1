@@ -105,13 +105,11 @@ Pasos del job **mkdocs-deploy**:
    - Acción: `peaceiris/actions-gh-pages@v3`  
    - Publica los contenidos de la carpeta site.
 
-- **Evidencia de la conexión a github mediante SSH**:
-![Prueba de conexión SSH](imagenes/pruebaSSH.png)
 
 ## Preguntas
 
 ### a. Identificación de herramientas de generación de documentación
-¿Qué herramienta o generador (p. ej., Sphinx, pdoc, Javadoc, Doxygen, Dokka) utilizaste en el workflow para crear la documentación en /docs?
+¿Qué herramienta o generador (p. ej., Sphinx, pdoc, Javadoc, Doxygen, Dokka) utilizaste en el workflow para crear la documentación en /docs?  
 Para generar la documentación en la carpeta docs, utilicé JavaDoc para extraer los comentarios (con el estilo Javadoc) del código y generar la documentación en formato HTML. Después, utilicé la herramienta wkhtmltopdf para convertir esos archivos HTML en documentos PDF, guardándose en la carpeta docs/pdf.
 
 ### b. Documentación de componentes
@@ -144,8 +142,8 @@ Añadí estos pasos:
 
 
 ### d. Colaboración
-Explica cómo GitHub facilita mantener la documentación (actualizaciones del README.md y de /docs) cuando colaboran varias personas (PRs, reviews, checks de CI, protección de ramas).
-
+Explica cómo GitHub facilita mantener la documentación (actualizaciones del README.md y de /docs) cuando colaboran varias personas (PRs, reviews, checks de CI, protección de ramas).  
+Cuando hay varios colaborando en un mismo repositorio se usa principalmente pull requests para proponer cambios desde una rama diferente a la rama principal. Permite que otros colaboradores revisen esos cambios mediante reviews, donde pueden dejar comentarios, sugerir mejoras o aprobarlos. También para mantener la actualización de la documentación se utilizan workflows de integración continua que ejecutan automáticamente procesos, como en este caso.
 
 ### e. Control de versiones
 Muestra mensajes de commit que evidencien el nuevo workflow.  
@@ -154,12 +152,13 @@ Muestra mensajes de commit que evidencien el nuevo workflow.
 
 ### f. Accesibilidad y seguridad
 ¿Qué medidas/configuración del repositorio garantizan que solo personal autorizado accede al código y la documentación?  
-(p. ej., repositorio privado, equipos, roles, claves/secretos, branch protection).
-
+(p. ej., repositorio privado, equipos, roles, claves/secretos, branch protection).  
+La principal medida de seguridad es que el repositorio esté en privado, de esta manera solo tienen acceso las personas autorizadas por el propietario.
+La gestión de estas autorizaciones se realiza mediante equipos y roles, lo que permite asignar permisos específicos a cada persona o equipo, definiendo qué acciones pueden realizar cada rol dentro del proyecto.
 
 
 ### g. Instalación/uso documentados
-Indica dónde en el README.md explicas el funcionamiento del workflow y dónde detallas las herramientas y comandos de documentación.  
+Indica dónde en el README.md explicas el funcionamiento del workflow y dónde detallas las herramientas y comandos de documentación.    
 El funcionamiento de los dos workflow se explicane [aquí](#funcionamiento-de-los-dos-workflows) (línea 22).  
 Las herramientas y comandos se detallan [aquí](#documentación-de-las-herramientas-y-comandos-utilizados) (línea 6).  
 
@@ -168,5 +167,8 @@ Justifica por qué el workflow utilizado es CI.
 ¿Qué evento dispara automáticamente la generación/actualización de la documentación (p. ej., push, pull_request, workflow_dispatch)?
 
 Es de integración continua porque se encarga de generar la documentación automáticamente sin que tenga que hacerlo el usuario manualmente. El workflow de ci.yaml se activa cuando se hace push a la rama main o cuando se ejecuta manualmente en Actions (workflow_dispatch). El workflow de mkdocs.yaml que se encarga de crear la página mediante Github Pages se activa cuando se completa el workflow anterior (workflow_run).
+
+## Evidencia de la conexión a github mediante SSH  
+![Prueba de conexión SSH](imagenes/pruebaSSH.png)
 
 ## Conclusiones
