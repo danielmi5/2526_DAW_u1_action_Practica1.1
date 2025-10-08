@@ -157,7 +157,7 @@ Lista de los commits:
 - **56162b7** "Workflow actualizado para generar documentación con Javadoc automáticamente, configurando también java. He añadido dos pasos, configurar java y un run que ejecuta un comando para crear la documentación."
 
 Los mensajes son claros y descriptivos, ya que siguen una estructura coherente y expresan las acciones realizadas en cada commit. Cada mensaje indica qué se modificó o añadió en el workflow, especificando los pasos añadidos.   
-Aunque, se podría haber detallado un poco más qué exactamente se añadió o se modificó en algunos commits y dividir ciertos cambios en varios commits más pequeños, haciendo que el historial de commits sea más ordenado y sencillo de revisar.
+Aunque, se podría haber detallado más. con qué exactamente se añadió o se modificó en algunos commits y dividir ciertos cambios en varios commits más pequeños, haciendo que el historial de commits sea más ordenado y sencillo de revisar.
 
 
 ### f. Accesibilidad y seguridad
