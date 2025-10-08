@@ -35,7 +35,8 @@ Actions utilizados:
   - HTML: Genero la documentación en formato HTML mediante JavaDoc, esta se genera el la carpeta docs/ ([enlace a la carpeta](https://github.com/danielmi5/2526_DAW_u1_action_Practica1.1/tree/main/docs))
   - PDF: Convierto la documentación en formato HTML generada por JavaDoc a PDF. Los archivos convertidos se crean en la carpeta docs/pdf ([enlace a la carpeta](https://github.com/danielmi5/2526_DAW_u1_action_Practica1.1/tree/main/docs/pdf))
 
-### Funcionamiento de los dos workflows
+### Funcionamiento de los dos workflows  
+Ambos workflows tienen permisos de escritura para que puedan modificar el contenido del repositorio.
 
 - **Explicación del [workflow 1](https://github.com/danielmi5/2526_DAW_u1_action_Practica1.1/blob/main/.github/workflows/ci.yaml) (ci.yaml)**:  
 Se encarga de crear la documentación en formato HTML y PDF.
