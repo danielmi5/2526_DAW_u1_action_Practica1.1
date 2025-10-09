@@ -1,0 +1,137 @@
+\hypertarget{classMain}{}\doxysection{Main Class Reference}
+\label{classMain}\index{Main@{Main}}
+\doxysubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static void \mbox{\hyperlink{classMain_a8a5d0f827edddff706cc0e6740d0579a}{main}} (String\mbox{[}$\,$\mbox{]} args)
+\item 
+static int \mbox{\hyperlink{classMain_a91d0fe6c3462c11c20832eb66847b3fd}{sumar}} (int num1, int num2)
+\item 
+static int \mbox{\hyperlink{classMain_a20c606d4067e0f027de70c475ce28f74}{restar}} (int num1, int num2)
+\item 
+static double \mbox{\hyperlink{classMain_a949069cf7edf91dc1c4328f7643f2593}{promedio}} (double\mbox{[}$\,$\mbox{]} numeros)
+\item 
+static boolean \mbox{\hyperlink{classMain_ac940c2f42212fff0f2bb035af66de7b1}{es\+Par}} (int num)
+\item 
+static int \mbox{\hyperlink{classMain_a09308f7f0dd707b23585efd68ccdb908}{factorial}} (int num)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Main.\+java
+
+Programa de ejemplo para demostrar la documentación con Javadoc. Contiene varias operaciones matemáticas. 
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classMain_ac940c2f42212fff0f2bb035af66de7b1}\label{classMain_ac940c2f42212fff0f2bb035af66de7b1}} 
+\index{Main@{Main}!esPar@{esPar}}
+\index{esPar@{esPar}!Main@{Main}}
+\doxysubsubsection{\texorpdfstring{esPar()}{esPar()}}
+{\footnotesize\ttfamily static boolean Main.\+es\+Par (\begin{DoxyParamCaption}\item[{int}]{num }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+Determina si un número es par.
+
+
+\begin{DoxyParams}{Parameters}
+{\em num} & Número entero a evaluar. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true si el número es par, false si el número es impar. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classMain_a09308f7f0dd707b23585efd68ccdb908}\label{classMain_a09308f7f0dd707b23585efd68ccdb908}} 
+\index{Main@{Main}!factorial@{factorial}}
+\index{factorial@{factorial}!Main@{Main}}
+\doxysubsubsection{\texorpdfstring{factorial()}{factorial()}}
+{\footnotesize\ttfamily static int Main.\+factorial (\begin{DoxyParamCaption}\item[{int}]{num }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+Calcula el factorial de un número entero.
+
+
+\begin{DoxyParams}{Parameters}
+{\em num} & Número entero mayor o igual a 0. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+El factorial de num. 
+\end{DoxyReturn}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em Illegal\+Argument\+Exception} & si el número es negativo. \\
+\hline
+\end{DoxyExceptions}
+\mbox{\Hypertarget{classMain_a8a5d0f827edddff706cc0e6740d0579a}\label{classMain_a8a5d0f827edddff706cc0e6740d0579a}} 
+\index{Main@{Main}!main@{main}}
+\index{main@{main}!Main@{Main}}
+\doxysubsubsection{\texorpdfstring{main()}{main()}}
+{\footnotesize\ttfamily static void Main.\+main (\begin{DoxyParamCaption}\item[{String\mbox{[}$\,$\mbox{]}}]{args }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+Método principal para ejecutar el programa.
+
+
+\begin{DoxyParams}{Parameters}
+{\em args} & Argumentos de línea de comandos. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classMain_a949069cf7edf91dc1c4328f7643f2593}\label{classMain_a949069cf7edf91dc1c4328f7643f2593}} 
+\index{Main@{Main}!promedio@{promedio}}
+\index{promedio@{promedio}!Main@{Main}}
+\doxysubsubsection{\texorpdfstring{promedio()}{promedio()}}
+{\footnotesize\ttfamily static double Main.\+promedio (\begin{DoxyParamCaption}\item[{double\mbox{[}$\,$\mbox{]}}]{numeros }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+Calcula el promedio de una lista de números.
+
+
+\begin{DoxyParams}{Parameters}
+{\em numeros} & Array de números (double). \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+El promedio de los valores del array. 
+\end{DoxyReturn}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em Illegal\+Argument\+Exception} & si el array está vacío. \\
+\hline
+\end{DoxyExceptions}
+\mbox{\Hypertarget{classMain_a20c606d4067e0f027de70c475ce28f74}\label{classMain_a20c606d4067e0f027de70c475ce28f74}} 
+\index{Main@{Main}!restar@{restar}}
+\index{restar@{restar}!Main@{Main}}
+\doxysubsubsection{\texorpdfstring{restar()}{restar()}}
+{\footnotesize\ttfamily static int Main.\+restar (\begin{DoxyParamCaption}\item[{int}]{num1,  }\item[{int}]{num2 }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+Resta dos números enteros.
+
+
+\begin{DoxyParams}{Parameters}
+{\em num1} & Primer número. \\
+\hline
+{\em num2} & Segundo número. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Resultado de la resta (num1 -\/ num2). 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classMain_a91d0fe6c3462c11c20832eb66847b3fd}\label{classMain_a91d0fe6c3462c11c20832eb66847b3fd}} 
+\index{Main@{Main}!sumar@{sumar}}
+\index{sumar@{sumar}!Main@{Main}}
+\doxysubsubsection{\texorpdfstring{sumar()}{sumar()}}
+{\footnotesize\ttfamily static int Main.\+sumar (\begin{DoxyParamCaption}\item[{int}]{num1,  }\item[{int}]{num2 }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+Suma dos números enteros.
+
+
+\begin{DoxyParams}{Parameters}
+{\em num1} & Primer número. \\
+\hline
+{\em num2} & Segundo número. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+La suma de ambos números. 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+src/main/java/Main.\+java\end{DoxyCompactItemize}

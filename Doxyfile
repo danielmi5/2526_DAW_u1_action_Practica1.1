@@ -1,0 +1,7 @@
+PROJECT_NAME           = "Proyecto"
+OUTPUT_DIRECTORY       = docs
+INPUT                  = ./src
+FILE_PATTERNS          = *.java
+RECURSIVE              = YES
+GENERATE_HTML          = YES
+GENERATE_LATEX         = YES
