@@ -1,85 +1,78 @@
 # Práctica 1.1 documentación con github actions
 
-- **Enlace página de Github Pages**:
-[Página con la documentación](https://danielmi5.github.io/2526_DAW_u1_action_Practica1.1/)
-
 ### Documentación de las herramientas y comandos utilizados
 
-Para la creación automática de documentación he utilizado GitHub Actions como herramienta de integración continua. El proyecto está desarrollado con Java 21 y la documentación se genera utilizando JavaDoc, siguiendo el estilo Javadoc en la documentación del código. La generación de la documentación se realiza mediante el comando `javadoc -d docs src/main/java/*.java` usado en el workflow, que crea la documentación en formato HTML en la carpeta docs.   
-Y para convertir la documentación generada por JavaDoc a PDF utilizo el paquete wkhtmltopdf, instalado con `sudo apt install wkhtmltopdf`, utilizando estos comandos las creo en la carpeta docs/pdf:
-```
-mkdir -p docs/pdf
-wkhtmltopdf --enable-local-file-access docs/package-summary.html docs/pdf/documentacion-package.pdf
-wkhtmltopdf --enable-local-file-access docs/index-all.html docs/pdf/documentacion-index-all.pdf
-wkhtmltopdf --enable-local-file-access docs/allclasses-index.html docs/pdf/allclasses-index.pdf
-wkhtmltopdf --enable-local-file-access docs/Main.html docs/pdf/documentacion-Main.pdf
-```
+Para la creación automática de documentación he utilizado GitHub Actions como herramienta de integración continua. El proyecto está desarrollado con Java 21 y la documentación del código he seguido el estilo Javadoc. La generación de la documentación se realiza mediante un actions `mattnotmitt/doxygen-action@v1.9.5` usado en el workflow, que crea la documentación en la carpeta docs en formato HTML y LATEX.   
+
 
 Actions utilizados:
 - **actions/checkout@v3**: Clona el repositorio en el entorno del runner.
 - **actions/setup-java@v5**: Instala y configura Java 21 (con distribución Temurin).  
+- **mattnotmitt/doxygen-action@v1.9.5**: Genera la documentación del proyecto usando Doxygen
 - **stefanzweifel/git-auto-commit-action@v4**: Realiza commits automáticos.
 
 
  ### Formatos generados de la documentación
-  - HTML: Genero la documentación en formato HTML mediante JavaDoc, esta se genera el la carpeta docs/ ([enlace a la carpeta](https://github.com/danielmi5/2526_DAW_u1_action_Practica1.1/tree/main/docs))
-  - PDF: Convierto la documentación en formato HTML generada por JavaDoc a PDF. Los archivos convertidos se crean en la carpeta docs/pdf ([enlace a la carpeta](https://github.com/danielmi5/2526_DAW_u1_action_Practica1.1/tree/main/docs/pdf))
+  - HTML: Genero la documentación en formato HTML mediante Doxygen, esta se genera el la carpeta docs/html ([enlace a la carpeta](https://github.com/danielmi5/2526_DAW_u1_action_Practica1.1/tree/main/docs/html))
+  - LATEX: Genero la documentación en formato LATEX mediante Doxygen, esta se genera el la carpeta docs/latex ([enlace a la carpeta](https://github.com/danielmi5/2526_DAW_u1_action_Practica1.1/tree/main/docs/latex))
+  - PDF: Convierto la documentación en formato LATEX generada por Doxygen a PDF. Los archivos convertidos se crean en la carpeta docs/pdf ([enlace a la carpeta](https://github.com/danielmi5/2526_DAW_u1_action_Practica1.1/tree/main/docs/pdf))
 
 ### Funcionamiento de los dos workflows  
 El workflow tienen permisos de escritura para que puedan modificar el contenido del repositorio.
 
-- **Explicación del [workflow 1](https://github.com/danielmi5/2526_DAW_u1_action_Practica1.1/blob/main/.github/workflows/ci.yaml) (ci.yaml)**:  
-Se encarga de crear la documentación en formato HTML y PDF.
-Los eventos que disparan el workflow son:
-    - Hacer push a la rama main.
-    - workflow_dispatch: permite ejecutar manualmente desde GitHub en [Actions](https://github.com/danielmi5/2526_DAW_u1_action_Practica1.1/actions/workflows/ci.yaml).
-      
-Pasos del job **auto-doc**:
+- Explicación del [workflow](https://github.com/danielmi5/2526_DAW_u1_action_Practica1.1/blob/main/.github/workflows/ci.yaml) con Doxygen (`ci.yaml`)
+
+Este workflow se encarga de generar automáticamente la documentación del proyecto en formato HTML y LaTeX (PDF) mediante **Doxygen**.
+
+Eventos que disparan el workflow:  
+- Hacer push a la rama main.
+- workflow_dispatch: permite ejecutar manualmente desde GitHub en la pestaña [Actions](https://github.com/danielmi5/2526_DAW_u1_action_Practica1.1/actions/workflows/ci.yaml).
+
+Pasos del job auto-doc:
+
 1. **Checkout del repositorio**
-   - Acción: `actions/checkout@v3`
-   - Clona el repositorio.
+- Acción: `actions/checkout@v3`
+- Clona el repositorio dentro del entorno de GitHub Actions.
 
 2. **Configuración de Java**
-   - Acción: `actions/setup-java@v5` (La versión es la última y también la única que soporta Java 21)
-   - Configura Java 21 (Temurin).
+- Acción: `actions/setup-java@v5`
+- Configura el entorno con Java 21 (Temurin), requerido para compilar o analizar el código fuente Java si fuera necesario.
 
-3. **Generación de la documentación**
+3. **Creación del archivo Doxyfile**
+- Comando:
+```
+cat > Doxyfile <<EOF
+PROJECT_NAME = "Proyecto"
+OUTPUT_DIRECTORY = docs
+INPUT = ./src
+FILE_PATTERNS = *.java
+RECURSIVE = YES
+GENERATE_HTML = YES
+GENERATE_LATEX = YES
+EOF
+```
+- Crea el archivo de configuración Doxyfile con los parámetros necesarios para generar la documentación correctamente.
 
-   * Comando: `javadoc -d docs src/main/java/*.java`
-   * Genera la documentación HTML en la carpeta docs/.
 
-4. **Commit automático**
+4. **Generación automática de la documentación**
+- Acción: `mattnotmitt/doxygen-action@v1.9.5`
+- Utiliza el Doxyfile generado previamente para generar la documentación.
+- Se crean dos carpetas:
+  - `docs/html/`: documentación en formato HTML navegable.
+  - `docs/latex/`: documentación en formato LaTeX (compilable en PDF).
 
-   * Acción: `stefanzweifel/git-auto-commit-action@v4`
-   * Hace commit de los cambios en la carpeta docs/ con el mensaje "Documentación JavaDoc en formato HTML actualizada".
-
-5. **Instalación de wkhtmltopdf**  
-   - Comando: `sudo apt install wkhtmltopdf`
-   - Instala el paquete wkhtmltopdf
-     
-
-6. **Conversión de HTML a PDF**  
-   - Comando: 
-     ```
-     mkdir -p docs/pdf
-     wkhtmltopdf --enable-local-file-access docs/package-summary.html docs/pdf/documentacion-package.pdf
-     wkhtmltopdf --enable-local-file-access docs/index-all.html docs/pdf/documentacion-index-all.pdf
-     wkhtmltopdf --enable-local-file-access docs/allclasses-index.html docs/pdf/allclasses-index.pdf
-     wkhtmltopdf --enable-local-file-access docs/Main.html docs/pdf/documentacion-Main.pdf
-     ```
-    - Convierte varios archivos html generados en la documentación de JavaDoc a pdf.
-
-7. **Commit automático de la documentación PDF**  
-   - Acción: `stefanzweifel/git-auto-commit-action@v4`
-   - Asigna `github_token: ${{ secrets.GITHUB_TOKEN }}` que es un token automático que GitHub crea para cada workflow y se usa      para que las acciones puedan autenticarse y realizar sus procesos en el repositorio.
-   - Hace commit de los cambios en la carpeta docs/pdf/ con el mensaje "Documentación en formato PDF actualizada"
+5. **Commit automático de la documentación**
+- Acción: `stefanzweifel/git-auto-commit-action@v4`
+- Realiza automáticamente un commit con los cambios generados en la carpeta `docs/`.
+- Mensaje del commit:** `"Documentación actualizada."`
 
 
 ## Preguntas
 
 ### a. Identificación de herramientas de generación de documentación
 ¿Qué herramienta o generador (p. ej., Sphinx, pdoc, Javadoc, Doxygen, Dokka) utilizaste en el workflow para crear la documentación en /docs?  
-Para generar la documentación en la carpeta docs, utilicé JavaDoc para extraer los comentarios (con el estilo Javadoc) del código y generar la documentación en formato HTML. Después, utilicé la herramienta wkhtmltopdf para convertir esos archivos HTML en documentos PDF, guardándose en la carpeta docs/pdf.
+Para generar la documentación en la carpeta docs utilicé Doxygen.
+En el workflow de GitHub Actions lo utilicé con el action `mattnotmitt/doxygen-action@v1.9.5`, que permite ejecutar Doxygen automáticamente. Este action genera la documentación HTML y LaTeX directamente en la carpeta docs configurada mediante el archivo Doxyfile.
 
 ### b. Documentación de componentes
 Muestra un fragmento del código con comentarios/docstrings estructurados (p. ej., :param, :return: o etiquetas equivalentes) que haya sido procesado por la herramienta.  
@@ -94,20 +87,7 @@ He utilizado Javadoc como estilo de documentación para el código. Al principio
 ### c. Multiformato
 ¿Qué segundo formato (además de HTML) generaste?  
 Explica la configuración o comandos del workflow y herramientas que lo producen.  
-Utilicé el formato pdf.
-Añadí estos pasos:
-- **Instalación de wkhtmltopdf**: Instalé primero la herrramienta necesaria para convertir los archivos HTML a PDF mediante el comando -> `sudo apt install wkhtmltopdf`
-- **Conversión de HTML a PDF**: Con la herramienta wkhtmltopdf convertí los archivos html a pdf. Primero crea la carpeta pdf en docs/ para guardar los archivos generados. Después con la herramienta convierto cada archivo elegido manualmente a pdf.
-     ```
-     mkdir -p docs/pdf
-     wkhtmltopdf --enable-local-file-access docs/package-summary.html docs/pdf/documentacion-package.pdf
-     wkhtmltopdf --enable-local-file-access docs/index-all.html docs/pdf/documentacion-index-all.pdf
-     wkhtmltopdf --enable-local-file-access docs/allclasses-index.html docs/pdf/allclasses-index.pdf
-     wkhtmltopdf --enable-local-file-access docs/Main.html docs/pdf/documentacion-Main.pdf
-     ```
-  Tras ejecutar los comandos para convertir los archivos me daba un error de renderización de archivos locales, por lo que tuve que añadir la opción `--enable-local-file-access`, hace que la herramienta pueda acceder y renderizar correctamente los archivos.
-
-- **Commit automático de la documentación PDF**: La acción `stefanzweifel/git-auto-commit-action@v4` permite hacer un commit automático, el commit se hace cuando termina de generar los pdf con el mensaje "Documentación en formato PDF actualizada".
+Utilicé el formato latex y pdf.
 
 
 ### d. Colaboración
@@ -136,33 +116,29 @@ La gestión de estas autorizaciones se realiza mediante equipos y roles, lo que 
 
 ### g. Instalación/uso documentados
 Indica dónde en el README.md explicas el funcionamiento del workflow y dónde detallas las herramientas y comandos de documentación.    
-El funcionamiento de los dos workflow se explicane [aquí](#funcionamiento-de-los-dos-workflows) (línea 38).  
-Las herramientas y comandos se detallan [aquí](#documentación-de-las-herramientas-y-comandos-utilizados) (línea 6).  
+El funcionamiento del workflow se explican [aquí](#funcionamiento-de-los-dos-workflows) (línea 20).  
+Las herramientas y comandos se detallan [aquí](#documentación-de-las-herramientas-y-comandos-utilizados) (línea 3).  
 
 ### h. Integración continua
 Justifica por qué el workflow utilizado es CI.  
 ¿Qué evento dispara automáticamente la generación/actualización de la documentación (p. ej., push, pull_request, workflow_dispatch)?
 
-Es de integración continua porque se encarga de generar la documentación automáticamente sin que tenga que hacerlo el usuario manualmente. El workflow de ci.yaml se activa cuando se hace push a la rama main o cuando se ejecuta manualmente en Actions (workflow_dispatch). El workflow de mkdocs.yaml que se encarga de crear la página mediante Github Pages se activa cuando se completa el workflow anterior (workflow_run).
+Es de integración continua porque se encarga de generar la documentación automáticamente sin que tenga que hacerlo el usuario manualmente. El workflow de ci.yaml se activa cuando se hace push a la rama main o cuando se ejecuta manualmente en Actions (workflow_dispatch). 
 
 ## Evidencia de la conexión a github mediante SSH  
 ![Prueba de conexión SSH](imagenes/pruebaSSH.png)
 
 ## Enlaces a la documentación de las herramientas y actions utilizados.
 Herramientas utilizadas
-- [Javadoc](https://docs.oracle.com/javase/8/docs/technotes/tools/windows/javadoc.html) 
-- [wkhtmltopdf](https://wkhtmltopdf.org/)  
-- [MkDocs](https://www.mkdocs.org/user-guide/) 
-- [GitHub Pages](https://docs.github.com/es/pages)   
+- [Estilo de documentación javadoc](https://docs.oracle.com/javase/8/docs/technotes/tools/windows/javadoc.html)    
 
 Actions utilizados
 - [actions/checkout@v3](https://github.com/actions/checkout)  
 - [actions/setup-java@v5](https://github.com/actions/setup-java)  
-- [actions/setup-python@v4](https://docs.github.com/es/actions/tutorials/build-and-test-code/python)  
-- [stefanzweifel/git-auto-commit-action@v4](https://github.com/stefanzweifel/git-auto-commit-action)  
-- [peaceiris/actions-gh-pages@v3](https://github.com/peaceiris/actions-gh-pages)  
+- [stefanzweifel/git-auto-commit-action@v4](https://github.com/stefanzweifel/git-auto-commit-action)   
+- [mattnotmitt/doxygen-action@v1.9.5](https://github.com/mattnotmitt/doxygen-action)
 
 
 ## Como usar el repositorio para reproducir la generación de documentación
 Primero hay que hacer fork del repositorio [aquí](https://github.com/danielmi5/2526_DAW_u1_action_Practica1.1/fork).  
-Para generar la documentación del repositorio no hace falta clonarlo, se puede hacer manualmente. Para generar la documentación manualmente, en el repo en la pestaña Actions se puede acceder a los workflows utilizados. Debes elegir el workflow llamado "CI con documentación automática mediante JavaDoc" y dentro, aparece una opción para poder ejecutarlo y generar la documentación.  
+Para generar la documentación del repositorio no hace falta clonarlo, se puede hacer manualmente. Para generar la documentación manualmente, en el repo en la pestaña Actions se puede acceder a los workflows utilizados. Debes elegir el workflow llamado "CI con documentación automática mediante Doxygen" y dentro, aparece una opción para poder ejecutarlo y generar la documentación.  

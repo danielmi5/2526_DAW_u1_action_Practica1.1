@@ -1,4 +1,4 @@
-name: CI con documentación automática mediante JavaDoc
+name: CI con documentación automática mediante Doxygen
 
 on:
   push:
