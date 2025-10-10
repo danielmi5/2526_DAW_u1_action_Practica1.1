@@ -43,6 +43,12 @@ jobs:
         with:
           doxyfile-path: ./Doxyfile
 
+      - name: Compilar el archivo raíz LaTeX a PDF
+        uses: xu-cheng/latex-action@v4
+        with:
+          working_directory: docs/latex
+          root_file: refman.tex
+
       - name: Commit automático de la documentación
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
