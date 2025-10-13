@@ -15,14 +15,13 @@ Actions utilizados:
  ### Formatos generados de la documentación
   - HTML: Genero la documentación en formato HTML mediante Doxygen, esta se genera el la carpeta docs/html ([enlace a la carpeta](https://github.com/danielmi5/2526_DAW_u1_action_Practica1.1/tree/main/docs/html))
   - LATEX: Genero la documentación en formato LATEX mediante Doxygen, esta se genera el la carpeta docs/latex ([enlace a la carpeta](https://github.com/danielmi5/2526_DAW_u1_action_Practica1.1/tree/main/docs/latex))
-  - PDF: Convierto la documentación en formato LATEX generada por Doxygen a PDF. Los archivos convertidos se crean en la carpeta docs/pdf ([enlace a la carpeta](https://github.com/danielmi5/2526_DAW_u1_action_Practica1.1/tree/main/docs/pdf))
 
 ### Funcionamiento de los dos workflows  
 El workflow tienen permisos de escritura para que puedan modificar el contenido del repositorio.
 
 - Explicación del [workflow](https://github.com/danielmi5/2526_DAW_u1_action_Practica1.1/blob/main/.github/workflows/ci.yaml) con Doxygen (`ci.yaml`)
 
-Este workflow se encarga de generar automáticamente la documentación del proyecto en formato HTML y LaTeX (PDF) mediante **Doxygen**.
+Este workflow se encarga de generar automáticamente la documentación del proyecto en formato HTML y LaTeX mediante **Doxygen**.
 
 Eventos que disparan el workflow:  
 - Hacer push a la rama main.
@@ -87,7 +86,27 @@ He utilizado Javadoc como estilo de documentación para el código. Al principio
 ### c. Multiformato
 ¿Qué segundo formato (además de HTML) generaste?  
 Explica la configuración o comandos del workflow y herramientas que lo producen.  
-Utilicé el formato latex y pdf.
+
+El segundo formato generado fue LateX, el cual se genera a partir del action `mattnotmitt/doxygen-action@v1.9.5` y la propiedad usada en el archivo Doxyfile.
+
+```
+GENERATE_LATEX = YES
+```
+
+Este parámetro dentro del archivo `Doxyfile` indica a **Doxygen** que, además del formato HTML, también debe generar la documentación en formato Latex con archivos .tex. 
+
+Paso del Workflow con el action utilizado para generar la documentación con Doxygen:
+
+```yaml
+- name: Documentar con doxygen en formato HTML y LATEX
+  uses: mattnotmitt/doxygen-action@v1.9.5
+  with:
+    doxyfile-path: ./Doxyfile
+```
+
+Esta acción del workflow utiliza la herramienta Doxygen para ejecutar automáticamente el proceso de documentación. El parámetro `doxyfile-path` le indica a la acción que utilice el archivo `Doxyfile` creado anteriormente, donde se definieron las propiedades del proyecto y los formatos de salida.  
+
+De esta manera, este action genera la documentación completa tanto en formato HTML como en LaTeX, siguiendo las configuraciones establecidas en el archivo Doxyfile.
 
 
 ### d. Colaboración
@@ -99,6 +118,7 @@ Muestra mensajes de commit que evidencien el nuevo workflow.
 ¿Son claros y descriptivos? Justifícalo. Además, incluye un conjunto de mensajes de tus commits.
 
 Lista de los commits:
+- **9a96efc** "Workflow actualizado para generar la documentación con Doxygen mediante un actions.  El primer paso añadido es crear el archivo Doxyfile y después se genera la documentación mediante el actions: mattnotmitt/doxygen-action@v1.9.5"
 - **220c744** "Workflow actualizado para generar documentación con wkhtmltopdf en formato pdf automáticamente. Añadido tres pasos: instalar el paquete  wkhtmltopdf,  convertir algunos archivos html de la documentación de JavaDoc a pdf y hace commit de los cambios."
 - **e7b805b** "Añadido al workflow el paso para hacer commit  automáticamente de la actualización de JavaDoc."
 - **56162b7** "Workflow actualizado para generar documentación con Javadoc automáticamente, configurando también java. He añadido dos pasos, configurar java y un run que ejecuta un comando para crear la documentación."
